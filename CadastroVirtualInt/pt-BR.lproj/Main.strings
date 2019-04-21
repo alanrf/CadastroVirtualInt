@@ -1,0 +1,27 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "59z-Wt-cec"; */
+"59z-Wt-cec.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "IjJ-Po-2I2"; */
+"IjJ-Po-2I2.text" = "Label";
+
+/* Class = "UITableViewSection"; headerTitle = "Data Limite"; ObjectID = "PyY-2h-Tt0"; */
+"PyY-2h-Tt0.headerTitle" = "Data Limite";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Uf9-gh-UAn"; */
+"Uf9-gh-UAn.text" = "Label";
+
+/* Class = "UITableViewSection"; headerTitle = "Responsável"; ObjectID = "Xoc-W6-oEd"; */
+"Xoc-W6-oEd.headerTitle" = "Responsável";
+
+/* Class = "UITableViewSection"; headerTitle = "Título"; ObjectID = "esm-B0-VeR"; */
+"esm-B0-VeR.headerTitle" = "Título";
+
+/* Class = "UINavigationItem"; title = "Tarefas"; ObjectID = "mwF-c0-5U8"; */
+"mwF-c0-5U8.title" = "Tarefas";
+
+/* Class = "UINavigationItem"; title = "Nova Tarefa"; ObjectID = "wMm-dD-Iie"; */
+"wMm-dD-Iie.title" = "Nova Tarefa";
+
+/* Class = "UITableViewSection"; headerTitle = "Descrição"; ObjectID = "wd0-zb-05I"; */
+"wd0-zb-05I.headerTitle" = "Descrição";

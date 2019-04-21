@@ -20,7 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FCBE6E352263E6EA004359B8 /* CadastroVirtual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CadastroVirtual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC54257E226D1DCC0098441C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
+		FC54257F226D1DCC0098441C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		FCBE6E352263E6EA004359B8 /* CadastroVirtualInt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CadastroVirtualInt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBE6E382263E6EA004359B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCBE6E3D2263E6EA004359B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FCBE6E3F2263E6EB004359B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,7 +50,7 @@
 		FCBE6E2C2263E6EA004359B8 = {
 			isa = PBXGroup;
 			children = (
-				FCBE6E372263E6EA004359B8 /* CadastroVirtual */,
+				FCBE6E372263E6EA004359B8 /* CadastroVirtualInt */,
 				FCBE6E362263E6EA004359B8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,12 +58,12 @@
 		FCBE6E362263E6EA004359B8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FCBE6E352263E6EA004359B8 /* CadastroVirtual.app */,
+				FCBE6E352263E6EA004359B8 /* CadastroVirtualInt.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FCBE6E372263E6EA004359B8 /* CadastroVirtual */ = {
+		FCBE6E372263E6EA004359B8 /* CadastroVirtualInt */ = {
 			isa = PBXGroup;
 			children = (
 				FCBE6E382263E6EA004359B8 /* AppDelegate.swift */,
@@ -76,15 +78,15 @@
 				FCBE6E412263E6EB004359B8 /* LaunchScreen.storyboard */,
 				FCBE6E442263E6EB004359B8 /* Info.plist */,
 			);
-			path = CadastroVirtual;
+			path = CadastroVirtualInt;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FCBE6E342263E6EA004359B8 /* CadastroVirtual */ = {
+		FCBE6E342263E6EA004359B8 /* CadastroVirtualInt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FCBE6E472263E6EB004359B8 /* Build configuration list for PBXNativeTarget "CadastroVirtual" */;
+			buildConfigurationList = FCBE6E472263E6EB004359B8 /* Build configuration list for PBXNativeTarget "CadastroVirtualInt" */;
 			buildPhases = (
 				FCBE6E312263E6EA004359B8 /* Sources */,
 				FCBE6E322263E6EA004359B8 /* Frameworks */,
@@ -94,9 +96,9 @@
 			);
 			dependencies = (
 			);
-			name = CadastroVirtual;
-			productName = CadastroVirtual;
-			productReference = FCBE6E352263E6EA004359B8 /* CadastroVirtual.app */;
+			name = CadastroVirtualInt;
+			productName = CadastroVirtualInt;
+			productReference = FCBE6E352263E6EA004359B8 /* CadastroVirtualInt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -114,7 +116,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FCBE6E302263E6EA004359B8 /* Build configuration list for PBXProject "CadastroVirtual" */;
+			buildConfigurationList = FCBE6E302263E6EA004359B8 /* Build configuration list for PBXProject "CadastroVirtualInt" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -127,7 +129,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FCBE6E342263E6EA004359B8 /* CadastroVirtual */,
+				FCBE6E342263E6EA004359B8 /* CadastroVirtualInt */,
 			);
 		};
 /* End PBXProject section */
@@ -167,6 +169,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FCBE6E3D2263E6EA004359B8 /* Base */,
+				FC54257E226D1DCC0098441C /* pt-BR */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FCBE6E422263E6EB004359B8 /* Base */,
+				FC54257F226D1DCC0098441C /* pt-BR */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -186,6 +190,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -247,6 +252,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -304,12 +310,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4MSA99AZ38;
-				INFOPLIST_FILE = CadastroVirtual/Info.plist;
+				INFOPLIST_FILE = CadastroVirtualInt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = alan.CadastroVirtual;
+				PRODUCT_BUNDLE_IDENTIFIER = alan.CadastroVirtualInt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -322,12 +328,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4MSA99AZ38;
-				INFOPLIST_FILE = CadastroVirtual/Info.plist;
+				INFOPLIST_FILE = CadastroVirtualInt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = alan.CadastroVirtual;
+				PRODUCT_BUNDLE_IDENTIFIER = alan.CadastroVirtualInt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -337,7 +343,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FCBE6E302263E6EA004359B8 /* Build configuration list for PBXProject "CadastroVirtual" */ = {
+		FCBE6E302263E6EA004359B8 /* Build configuration list for PBXProject "CadastroVirtualInt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FCBE6E452263E6EB004359B8 /* Debug */,
@@ -346,7 +352,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FCBE6E472263E6EB004359B8 /* Build configuration list for PBXNativeTarget "CadastroVirtual" */ = {
+		FCBE6E472263E6EB004359B8 /* Build configuration list for PBXNativeTarget "CadastroVirtualInt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FCBE6E482263E6EB004359B8 /* Debug */,
