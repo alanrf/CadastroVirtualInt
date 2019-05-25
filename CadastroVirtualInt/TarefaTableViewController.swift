@@ -7,27 +7,32 @@
 //
 
 import UIKit
+import CoreData
 
 class TarefaTableViewController: UITableViewController {
 
-    var gerenciadorTarefa = GerenciadorTarefa()
+    //var gerenciadorTarefa = GerenciadorTarefa()
+    fileprivate var tarefasDB : [NSManagedObject] = []
     
     @IBAction func unwindToTarefaList(segue: UIStoryboardSegue) {
         guard segue.identifier == "saveUnwind" else { return }
         let sourceViewController = segue.source as! TarefaViewController
-        
-        if let tarefa = sourceViewController.tarefa {
+
+        //TODO sera trocado pela chamada de salvar no DB
+        if let tarefaDetalhe = sourceViewController.tarefa {
             if let selectedIndexPath =
                 tableView.indexPathForSelectedRow {
-                gerenciadorTarefa.tarefas[selectedIndexPath.row] = tarefa
-                tableView.reloadRows(at: [selectedIndexPath],
-                                     with: .none)
+//                gerenciadorTarefa.tarefas[selectedIndexPath.row] = tarefa
+//                tableView.reloadRows(at: [selectedIndexPath],
+//                                     with: .none)
             } else {
-                let newIndexPath = IndexPath(row: gerenciadorTarefa.tarefas.count,
-                                             section: 0)
-                gerenciadorTarefa.tarefas.append(tarefa)
-                tableView.insertRows(at: [newIndexPath],
-                                     with: .automatic)
+                saveTarefaDB(tarefa: tarefaDetalhe)
+                self.tableView.reloadData()
+//                let newIndexPath = IndexPath(row: tarefas.count,
+//                                             section: 0)
+//                gerenciadorTarefa.tarefas.append(tarefa)
+//                tableView.insertRows(at: [newIndexPath],
+//                                     with: .automatic)
             }
         }
     }
@@ -37,6 +42,11 @@ class TarefaTableViewController: UITableViewController {
 
         self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getTarefasFromDB()
+    }
 
     // MARK: - Table view data source
 
@@ -45,7 +55,7 @@ class TarefaTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gerenciadorTarefa.tarefas.count
+        return tarefasDB.count
     }
 
     
@@ -54,9 +64,9 @@ class TarefaTableViewController: UITableViewController {
             fatalError("Could not dequeue a cell")
         }
 
-        let tarefa = gerenciadorTarefa.tarefas[indexPath.row]
-        cell.lbTitulo.text = tarefa.titulo
-        cell.lbData.text = Tarefa.dateFormatter.string(from: tarefa.dataLimite)
+        let tarefa = tarefasDB[indexPath.row]
+        cell.lbTitulo.text = tarefa.value(forKeyPath: "titulo") as? String
+        cell.lbData.text = Tarefa.dateFormatter.string(from: (tarefa.value(forKeyPath: "dataLimite") as? Date)!)
 
         return cell
     }
@@ -69,8 +79,8 @@ class TarefaTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            gerenciadorTarefa.tarefas.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            gerenciadorTarefa.tarefas.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 
@@ -83,12 +93,59 @@ class TarefaTableViewController: UITableViewController {
             let tarefaViewController = segue.destination
                 as! TarefaViewController
             let indexPath = tableView.indexPathForSelectedRow!
-            let tarefaSelecionada = gerenciadorTarefa.tarefas[indexPath.row]
-            tarefaViewController.tarefa = tarefaSelecionada
+            let tarefaSelecionada = tarefasDB[indexPath.row]
+            
+            let tarefa = Tarefa(titulo: (tarefaSelecionada.value(forKeyPath: "titulo") as? String)!,
+                                descricao: (tarefaSelecionada.value(forKeyPath: "descricao") as? String)!,
+                                dataLimite: (tarefaSelecionada.value(forKeyPath: "dataLimite") as? Date)!,
+                                responsavel: (tarefaSelecionada.value(forKeyPath: "responsavel") as? String)!)
+            
+            tarefaViewController.tarefa = tarefa
         }
     }
     
+    // MARK: - Custom methods
+    func getTarefasFromDB() {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "TarefaDB")
+            do {
+                tarefasDB = try managedContext.fetch(fetchRequest)
+            } catch let error as NSError {
+                print("Não foi possível buscar a entidade TarefasDB \(error), \(error.userInfo)")
+            }
+        }
+    }
     
+    func saveTarefaDB(tarefa : Tarefa) -> NSManagedObjectID? {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "TarefaDB",
+                                                in: managedContext)!
+        
+        let tarefaDB = NSManagedObject(entity: entity,
+                                      insertInto: managedContext)
+        
+        tarefaDB.setValue(tarefa.titulo, forKeyPath: "titulo")
+        tarefaDB.setValue(tarefa.descricao, forKeyPath: "descricao")
+        tarefaDB.setValue(tarefa.responsavel, forKeyPath: "responsavel")
+        tarefaDB.setValue(tarefa.dataCriacao, forKeyPath: "dataCriacao")
+        tarefaDB.setValue(tarefa.dataLimite, forKeyPath: "dataLimite")
+        
+        do {
+            try managedContext.save()
+            tarefasDB.append(tarefaDB)
+            return tarefaDB.objectID
+        } catch let error as NSError {
+            print("Erro ao salvar: \(error), \(error.userInfo)")
+            return nil
+        }
+    }
     
 
 }
