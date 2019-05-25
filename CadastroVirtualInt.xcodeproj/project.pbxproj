@@ -52,7 +52,6 @@
 		FCBE6E2C2263E6EA004359B8 = {
 			isa = PBXGroup;
 			children = (
-				FC9F45FE2299B64E001FE1DC /* Model.xcdatamodeld */,
 				FCBE6E372263E6EA004359B8 /* CadastroVirtualInt */,
 				FCBE6E362263E6EA004359B8 /* Products */,
 			);
@@ -80,6 +79,7 @@
 				FCBE6E3F2263E6EB004359B8 /* Assets.xcassets */,
 				FCBE6E412263E6EB004359B8 /* LaunchScreen.storyboard */,
 				FCBE6E442263E6EB004359B8 /* Info.plist */,
+				FC9F45FE2299B64E001FE1DC /* Model.xcdatamodeld */,
 			);
 			path = CadastroVirtualInt;
 			sourceTree = "<group>";

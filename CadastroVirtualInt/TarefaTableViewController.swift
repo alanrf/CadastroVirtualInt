@@ -11,6 +11,7 @@ import CoreData
 
 class TarefaTableViewController: UITableViewController {
 
+    
     //var gerenciadorTarefa = GerenciadorTarefa()
     fileprivate var tarefasDB : [NSManagedObject] = []
     
@@ -22,18 +23,12 @@ class TarefaTableViewController: UITableViewController {
         if let tarefaDetalhe = sourceViewController.tarefa {
             if let selectedIndexPath =
                 tableView.indexPathForSelectedRow {
-//                gerenciadorTarefa.tarefas[selectedIndexPath.row] = tarefa
-//                tableView.reloadRows(at: [selectedIndexPath],
-//                                     with: .none)
+                let tarefaDB = tarefasDB[selectedIndexPath.row] as! TarefaDB
+                updateTarefaDB(tarefa: tarefaDetalhe, tarefaDB: tarefaDB)
             } else {
                 saveTarefaDB(tarefa: tarefaDetalhe)
-                self.tableView.reloadData()
-//                let newIndexPath = IndexPath(row: tarefas.count,
-//                                             section: 0)
-//                gerenciadorTarefa.tarefas.append(tarefa)
-//                tableView.insertRows(at: [newIndexPath],
-//                                     with: .automatic)
             }
+            self.tableView.reloadData()
         }
     }
     
@@ -79,8 +74,8 @@ class TarefaTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-//            gerenciadorTarefa.tarefas.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
+            deleteTarefaDB(index: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 
@@ -117,10 +112,9 @@ class TarefaTableViewController: UITableViewController {
         }
     }
     
-    func saveTarefaDB(tarefa : Tarefa) -> NSManagedObjectID? {
-        
+    func saveTarefaDB(tarefa : Tarefa) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return nil
+            return
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -140,10 +134,44 @@ class TarefaTableViewController: UITableViewController {
         do {
             try managedContext.save()
             tarefasDB.append(tarefaDB)
-            return tarefaDB.objectID
         } catch let error as NSError {
             print("Erro ao salvar: \(error), \(error.userInfo)")
-            return nil
+        }
+    }
+    
+    func updateTarefaDB(tarefa : Tarefa, tarefaDB : TarefaDB) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        tarefaDB.setValue(tarefa.titulo, forKeyPath: "titulo")
+        tarefaDB.setValue(tarefa.descricao, forKeyPath: "descricao")
+        tarefaDB.setValue(tarefa.responsavel, forKeyPath: "responsavel")
+        //tarefaDB.setValue(tarefa.dataCriacao, forKeyPath: "dataCriacao")
+        tarefaDB.setValue(tarefa.dataLimite, forKeyPath: "dataLimite")
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Erro ao atualizar: \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteTarefaDB(index: Int) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        do {
+            managedContext.delete(tarefasDB[index])
+            tarefasDB.remove(at: index)
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Erro ao atualizar: \(error), \(error.userInfo)")
         }
     }
     
