@@ -8,8 +8,14 @@
 
 import UIKit
 
+@objc protocol TarefaCellDelegate: class {
+    func checkmarkTapped(sender: TarefaViewCell)
+}
+
 class TarefaViewCell: UITableViewCell {
 
+    var delegate: TarefaCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,5 +29,10 @@ class TarefaViewCell: UITableViewCell {
     
     @IBOutlet weak var lbTitulo: UILabel!
     @IBOutlet weak var lbData: UILabel!
+    @IBOutlet weak var isCompleteButton: UIButton!
     
+    @IBAction func completeButtonTapped() {
+        delegate?.checkmarkTapped(sender: self)
+    }
+
 }

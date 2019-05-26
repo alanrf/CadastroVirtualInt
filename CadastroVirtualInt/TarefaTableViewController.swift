@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class TarefaTableViewController: UITableViewController, UIViewControllerTransitioningDelegate {
+class TarefaTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, TarefaCellDelegate {
 
     let presentAnimationController = PresentAnimationController()
 
@@ -28,6 +28,22 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
                 saveTarefaDB(tarefa: tarefaDetalhe)
             }
             self.tableView.reloadData()
+        }
+    }
+    
+    func checkmarkTapped(sender: TarefaViewCell) {
+        if let indexPath = tableView.indexPath(for: sender) {
+            let tarefaDB = tarefasDB[indexPath.row] as! TarefaDB
+            tarefaDB.completo = !tarefaDB.completo
+            
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            updateTarefaConcluidaDB(tarefaDB: tarefaDB)
+            
+            sender.isCompleteButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            
+            UIView.animate(withDuration: 2.0, delay: 0.1, options: UIView.AnimationOptions.curveEaseIn, animations: { () -> Void in
+                sender.isCompleteButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
+            }, completion: nil)
         }
     }
     
@@ -61,6 +77,8 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
         let tarefa = tarefasDB[indexPath.row]
         cell.lbTitulo.text = tarefa.value(forKeyPath: "titulo") as? String
         cell.lbData.text = Tarefa.dateFormatter.string(from: (tarefa.value(forKeyPath: "dataLimite") as? Date)!)
+        cell.isCompleteButton.isSelected = tarefa.value(forKeyPath: "completo") as? Bool ?? false
+        cell.delegate = self;
 
         return cell
     }
@@ -132,6 +150,7 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
         tarefaDB.setValue(tarefa.responsavel, forKeyPath: "responsavel")
         tarefaDB.setValue(tarefa.dataCriacao, forKeyPath: "dataCriacao")
         tarefaDB.setValue(tarefa.dataLimite, forKeyPath: "dataLimite")
+        tarefaDB.setValue(false, forKeyPath: "completo")
         
         do {
             try managedContext.save()
@@ -161,6 +180,20 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
         }
     }
     
+    func updateTarefaConcluidaDB(tarefaDB : TarefaDB) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Erro ao atualizar estado tarefa: \(error), \(error.userInfo)")
+        }
+    }
+    
     func deleteTarefaDB(index: Int) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -180,4 +213,8 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return presentAnimationController
     }
+    
+    
+    
+    
 }

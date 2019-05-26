@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "TarefaTableViewController.tableView(_:cellForRowAt:):TarefaTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "tarefa.value(forKeyPath: &quot;completo&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
