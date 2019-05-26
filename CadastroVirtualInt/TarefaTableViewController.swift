@@ -9,17 +9,16 @@
 import UIKit
 import CoreData
 
-class TarefaTableViewController: UITableViewController {
+class TarefaTableViewController: UITableViewController, UIViewControllerTransitioningDelegate {
 
-    
-    //var gerenciadorTarefa = GerenciadorTarefa()
+    let presentAnimationController = PresentAnimationController()
+
     fileprivate var tarefasDB : [NSManagedObject] = []
     
     @IBAction func unwindToTarefaList(segue: UIStoryboardSegue) {
         guard segue.identifier == "saveUnwind" else { return }
         let sourceViewController = segue.source as! TarefaViewController
 
-        //TODO sera trocado pela chamada de salvar no DB
         if let tarefaDetalhe = sourceViewController.tarefa {
             if let selectedIndexPath =
                 tableView.indexPathForSelectedRow {
@@ -84,8 +83,11 @@ class TarefaTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        segue.destination.transitioningDelegate = self
+        
         if segue.identifier == "showDetails" {
-            let tarefaViewController = segue.destination
+            let navigationViewController = segue.destination as! UINavigationController
+            let tarefaViewController = navigationViewController.topViewController
                 as! TarefaViewController
             let indexPath = tableView.indexPathForSelectedRow!
             let tarefaSelecionada = tarefasDB[indexPath.row]
@@ -171,9 +173,11 @@ class TarefaTableViewController: UITableViewController {
             tarefasDB.remove(at: index)
             try managedContext.save()
         } catch let error as NSError {
-            print("Erro ao atualizar: \(error), \(error.userInfo)")
+            print("Erro ao apagar: \(error), \(error.userInfo)")
         }
     }
     
-
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return presentAnimationController
+    }
 }

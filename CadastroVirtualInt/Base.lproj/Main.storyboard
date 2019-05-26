@@ -50,7 +50,7 @@
                                 <connections>
                                     <outlet property="lbData" destination="Uf9-gh-UAn" id="pLu-25-rup"/>
                                     <outlet property="lbTitulo" destination="59z-Wt-cec" id="cSk-DE-doS"/>
-                                    <segue destination="a3b-yW-TqM" kind="show" identifier="showDetails" id="NRt-x1-yPW"/>
+                                    <segue destination="cbU-r1-ReD" kind="presentation" identifier="showDetails" id="8kb-CR-wDY"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -247,7 +247,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xi3-mh-fUt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="995" y="472"/>
+            <point key="canvasLocation" x="1007" y="26"/>
         </scene>
         <!--Navigation View Controller-->
         <scene sceneID="H2W-Po-kAz">
@@ -267,6 +267,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1kU-3C-Y1x"/>
+        <segue reference="8kb-CR-wDY"/>
     </inferredMetricsTieBreakers>
 </document>
