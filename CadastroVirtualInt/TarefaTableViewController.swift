@@ -12,6 +12,8 @@ import CoreData
 class TarefaTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, TarefaCellDelegate {
 
     let presentAnimationController = PresentAnimationController()
+    
+    var newRegister = false;
 
     fileprivate var tarefasDB : [NSManagedObject] = []
     
@@ -26,6 +28,7 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
                 updateTarefaDB(tarefa: tarefaDetalhe, tarefaDB: tarefaDB)
             } else {
                 saveTarefaDB(tarefa: tarefaDetalhe)
+                newRegister = true;
             }
             self.tableView.reloadData()
         }
@@ -56,6 +59,10 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getTarefasFromDB()
+        if (newRegister) {
+            newRegister = false
+            animateTable()
+        }
     }
 
     // MARK: - Table view data source
@@ -78,7 +85,7 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
         cell.lbTitulo.text = tarefa.value(forKeyPath: "titulo") as? String
         cell.lbData.text = Tarefa.dateFormatter.string(from: (tarefa.value(forKeyPath: "dataLimite") as? Date)!)
         cell.isCompleteButton.isSelected = tarefa.value(forKeyPath: "completo") as? Bool ?? false
-        cell.delegate = self;
+        cell.delegate = self
 
         return cell
     }
@@ -214,7 +221,25 @@ class TarefaTableViewController: UITableViewController, UIViewControllerTransiti
         return presentAnimationController
     }
     
-    
+    func animateTable() {
+        tableView.reloadData()
+        let cells = tableView.visibleCells
+        
+        let tableViewHeight = tableView.bounds.size.height
+        
+        for cell in cells {
+            cell.transform = CGAffineTransform(translationX: 0, y: tableViewHeight)
+        }
+        
+        var delayCounter = 0
+        for cell in cells {
+            UIView.animate(withDuration: 1.25, delay: Double(delayCounter) * 0.05, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+                cell.transform = CGAffineTransform.identity
+            }, completion: nil)
+            delayCounter += 1
+        }
+        
+    }
     
     
 }
